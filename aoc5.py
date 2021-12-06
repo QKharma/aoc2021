@@ -69,41 +69,31 @@ class Line():
             positions.append([i,self.y1])
           return positions
     else:
+      i = self.x1
+      o = self.y1
       if self.x1 < self.x2 and self.y1 < self.y2:
-        i = self.x1
-        o = self.y1
         for _ in range(self.x1, self.x2+1, 1):
             positions.append([i,o])
             i += 1
             o += 1
-        print(self.line, positions)
         return positions
       elif self.x1 > self.x2 and self.y1 < self.y2:
-        i = self.x1
-        o = self.y1
         for _ in range(self.x2, self.x1+1, 1):
             positions.append([i,o])
             i -= 1
             o += 1
-        print(self.line, positions)
         return positions
       elif self.x1 > self.x2 and self.y1 > self.y2:
-        i = self.x1
-        o = self.y1
         for _ in range(self.x2, self.x1+1, 1):
             positions.append([i,o])
             i -= 1
             o -= 1
-        print(self.line, positions)
         return positions
       elif self.x1 < self.x2 and self.y1 > self.y2:
-        i = self.x1
-        o = self.y1
-        for i in range(self.x1, self.x2+1, 1):
+        for _ in range(self.x1, self.x2+1, 1):
             positions.append([i,o])
             i += 1
             o -= 1
-        print(self.line, positions)
         return positions
 
 lines = []
@@ -133,7 +123,5 @@ overlapping_count = 0
 for key, value in position_count.items():
   if value > 1:
     overlapping_count += 1
-
-print(position_count)
 
 print(overlapping_count)
