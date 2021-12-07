@@ -13,7 +13,6 @@ for fish in fishes:
     age_groups[fish] += 1
 
 for i in range(0,256):
-    print(i, ' : ', age_groups)
     for i in range(0,len(age_groups)):
         if i == 6:
             to_add[i] = age_groups[i+1] + age_groups[0]
