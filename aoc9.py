@@ -5,21 +5,18 @@ low_points = []
 
 for y in range(len(rows)):
     for x in range(len(rows[0])):
+
+        is_low_point = True
+
         if rows[y][x] == '9':
             continue
-        is_low_point = True
+
         if y != 0:
-            try:
-                if int(rows[y-1][x]) < int(rows[y][x]):
-                    is_low_point = False
-            except:
-                pass
+            if int(rows[y-1][x]) < int(rows[y][x]):
+                is_low_point = False
         if x != 0:
-            try:
-                if int(rows[y][x-1]) < int(rows[y][x]) :
-                    is_low_point = False
-            except:
-                pass
+            if int(rows[y][x-1]) < int(rows[y][x]) :
+                is_low_point = False
         try:
             if int(rows[y+1][x]) < int(rows[y][x]) :
                 is_low_point = False
@@ -30,10 +27,6 @@ for y in range(len(rows)):
                 is_low_point = False
         except:
             pass
-
-
-        if int(rows[y][x]) == 0:
-            is_low_point = True
 
         if is_low_point is True:
             low_points.append((y, x))
@@ -84,7 +77,7 @@ def get_basin(points):
         return get_basin(new_points)
         
 for point in low_points:
-    basin = []
+
     y = point[0]
     x = point[1]
 
