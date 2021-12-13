@@ -44,7 +44,6 @@ def get_adjacent(octos, s_octo):
 def part1():
 
     octos = define_octos()
-
     flashes = 0
 
     for step in range(100):
