@@ -57,8 +57,7 @@ for fold in folds:
           empty_row.append(' ')
         to_fold.append(empty_row)
       to_fold = to_fold[::-1]
-      #for row in to_fold:
-      #  print(row)
+
       for i_2 in range(len(to_fold)):
         for i_3 in range(len(to_fold[0])):
           if to_fold[i_2][i_3] == '#':
@@ -71,8 +70,7 @@ for fold in folds:
       for i in range(int(math.floor(len(paper)/2)),len(paper)):
         to_fold.append(paper[i])
       to_fold = to_fold[::-1]
-      #for row in to_fold:
-      #  print(row)
+
       for i_2 in range(len(to_fold)):
         for i_3 in range(len(to_fold[0])):
           if to_fold[i_2][i_3] == '#':
@@ -95,12 +93,12 @@ for fold in folds:
           row.pop()
       for i in range(len(to_fold)):
           to_fold[i] = to_fold[i][::-1]
-      #for row in to_fold:
-      #    print(row)
+
       for i_2 in range(len(to_fold)):
         for i_3 in range(len(to_fold[0])):
           if to_fold[i_2][i_3] == '#':
             paper[i_2][i_3] = '#'
+            
     else:
       for row in paper:
         to_fold_row = []
@@ -109,8 +107,7 @@ for fold in folds:
         to_fold.append(to_fold_row)
       for i in range(len(to_fold)):
           to_fold[i] = to_fold[i][::-1]
-      #for row in to_fold:
-      #    print(row)
+
       for i_2 in range(len(to_fold)):
         for i_3 in range(len(to_fold[0])):
           if to_fold[i_2][i_3] == '#':
@@ -120,18 +117,5 @@ for fold in folds:
         for i in range(int(math.floor(len(row)/2)),len(row)):
           row.pop()
 
-  #for row in paper:
-  #  print(''.join(row))
-
-count = 0
-print('max_x:',max_x,' max_y:',max_y)
-print(len(paper))
 for row in paper:
-  count += row.count('#')
   print(''.join(row))
-print(count)
-
-f = open('test_me.txt', 'a')
-for row in paper:
-    f.write(''.join(row))
-f.close
