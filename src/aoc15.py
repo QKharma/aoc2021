@@ -1,5 +1,4 @@
-import copy
-import time
+import sys
 
 input_file = open('./inputs/aoc15.txt', 'r')
 rows = input_file.read().split('\n')
@@ -12,6 +11,7 @@ class Node():
     self.parent = parent
     self.value = value
     self.passed = False
+    self.discovered = False
     
 def return_adjacent(y,x):
     nodes = []
@@ -31,27 +31,41 @@ def return_adjacent(y,x):
     return nodes
 
 end_reached = False
-nodes = []
-new_nodes = []
-starting_value = 0
+node_grid = []
+grid_size = len(rows)
 
-new_nodes.append(Node(0,0,None,0))
+for y in range(len(rows)):
+  row = []
+  for x in range(len(rows[0])):
+    row.append(Node(x,y,None,0))
+  node_grid.append(row)
+
+node_grid[0][0].value = 0
+node_grid[0][0].discovered = True
 
 while end_reached is False:
 
-  min_node = Node(0,0,None,1000000000000000000000000000000000)
-  for node in new_nodes:
-    if node.passed is False:
-      if node.value < min_node.value:
-        min_node = node
+  min_node = Node(0,0,None,sys.maxsize)
+  for row in node_grid:
+    for node in row:
+      if node.passed is False and node.discovered is True:
+        if node.value < min_node.value:
+          min_node = node
 
-  min_node.passed = True
+  node_grid[min_node.y][min_node.x].passed = True
   adj = return_adjacent(min_node.y,min_node.x)
   for new in adj:
-    if not [n.passed for n in new_nodes if n.x == new[1][1] and n.y == new[1][0]]:
-      new_nodes.append(Node(new[1][1],new[1][0],min_node,new[0]+min_node.value))
+    if node_grid[new[1][0]][new[1][1]].passed is False and node_grid[new[1][0]][new[1][1]].discovered is False:
+    #if not [n.passed for n in new_nodes if n.x == new[1][1] and n.y == new[1][0]]:
+      node_grid[new[1][0]][new[1][1]].parent = min_node
+      node_grid[new[1][0]][new[1][1]].value = new[0]+min_node.value
+      node_grid[new[1][0]][new[1][1]].discovered = True
+      #new_nodes.append(Node(new[1][1],new[1][0],min_node,new[0]+min_node.value))
 
-  if (9,9) in [(n.x,n.y) for n in new_nodes]:
+  #print(len(new_nodes))
+  #print(min_node.value)
+
+  if node_grid[grid_size-1][grid_size-1].value != 0:
     end_reached = True
 
-print([n.value for n in new_nodes if (n.x,n.y) == (9,9)])
+print(node_grid[grid_size-1][grid_size-1].value)
