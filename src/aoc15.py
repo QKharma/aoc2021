@@ -56,14 +56,9 @@ while end_reached is False:
   adj = return_adjacent(min_node.y,min_node.x)
   for new in adj:
     if node_grid[new[1][0]][new[1][1]].passed is False and node_grid[new[1][0]][new[1][1]].discovered is False:
-    #if not [n.passed for n in new_nodes if n.x == new[1][1] and n.y == new[1][0]]:
       node_grid[new[1][0]][new[1][1]].parent = min_node
       node_grid[new[1][0]][new[1][1]].value = new[0]+min_node.value
       node_grid[new[1][0]][new[1][1]].discovered = True
-      #new_nodes.append(Node(new[1][1],new[1][0],min_node,new[0]+min_node.value))
-
-  #print(len(new_nodes))
-  #print(min_node.value)
 
   if node_grid[grid_size-1][grid_size-1].value != 0:
     end_reached = True
