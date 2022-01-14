@@ -43,7 +43,7 @@ class Packet():
     self.subpackets = []
 
     packet_string = packet_string[6:]
-    
+
     if self.type == 4:
       i = 0
       value = ''
@@ -99,8 +99,40 @@ class Packet():
       sum += version_sum
     return sum
 
+  def set_values(self):
+    if len(self.subpackets) == 0:
+      pass
+    else:
+      for packet in self.subpackets:
+        packet.set_values()
+
+      if self.type == 0:
+        for packet in self.subpackets:
+          self.value += packet.value
+      elif self.type == 1:
+        self.value = 1
+        for packet in self.subpackets:
+          self.value *= packet.value
+      elif self.type == 2:
+        self.value = self.subpackets[0].value
+        for packet in self.subpackets:
+          if packet.value < self.value:
+            self.value = packet.value
+      elif self.type == 3:
+        self.value = self.subpackets[0].value
+        for packet in self.subpackets:
+          if packet.value > self.value:
+            self.value = packet.value
+      elif self.type == 5:
+        self.value = 1 if self.subpackets[0].value > self.subpackets[1].value else 0
+      elif self.type == 6:
+        self.value = 1 if self.subpackets[0].value < self.subpackets[1].value else 0
+      elif self.type == 7:
+        self.value = 1 if self.subpackets[0].value == self.subpackets[1].value else 0
+
 packet_input = ''.join([hex_table[c] for c in packet_input])
 
 packet = Packet(packet_input)
-#print(packet.value, packet.length)
 print(packet.print_version())
+packet.set_values()
+print(packet.value)
