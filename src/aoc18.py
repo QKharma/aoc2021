@@ -73,8 +73,9 @@ class Node:
     else:
       return self.data
 
+#Part 1
+"""
 root = Node(literal_eval(rows[0]),0)
-
 for row in range(1,len(rows)):
   root = Node([root.data,literal_eval(rows[row])],0)
   while True:
@@ -93,6 +94,34 @@ for row in range(1,len(rows)):
     if split:
       continue
     break
-
 print(root.data)
 print(root.magnitude())
+"""
+
+highest_magnitude = 0
+
+for i in range(len(rows)):
+  for j in range(len(rows)):
+    root = Node([literal_eval(rows[i]), literal_eval(rows[j])],0)
+    while True:
+      references = []
+      root.list_value_references(references)
+
+      #explode
+      exploded = root.explode(references)
+      root.update_tree()
+      if exploded:
+        continue
+
+      #otherwise split
+      split = root.split()
+      root.update_tree()
+      if split:
+        continue
+      break
+      
+    magnitude = root.magnitude()
+    if magnitude > highest_magnitude:
+      highest_magnitude = magnitude
+
+print(highest_magnitude)
